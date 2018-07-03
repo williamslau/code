@@ -1,0 +1,17 @@
+{
+  "name": "koa_note",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "koa": "^2.5.1",
+    "koa-better-body": "^3.0.4",
+    "koa-static": "^4.0.2"
+  }
+}

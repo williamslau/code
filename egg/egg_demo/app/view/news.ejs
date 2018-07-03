@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="/public/css/bootstrap.css">
+    <style>
+        a{
+
+        }
+    </style>
+    <title>百度新闻</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md">
+                <div class="card">
+                    <div class="card-header">
+                        百度新闻排行榜
+                    </div>
+                    <diV class="card-body">
+                        <ul class="list-group list-group-flush">
+                            <%news.forEach(item=>{%>
+                                <li class="list-gtoup-item">
+                                    <a href="<%=item.url%>">
+                                        <%=item.title%>
+                                    </a>
+                                    <span style="float:right"><%=helper.relative(item.time)%></span>
+                                </li>
+                            <%})%>
+                        </ul>
+                    </diV>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

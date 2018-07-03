@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+
+<body>
+    <div id="app">
+        <input type="text" v-model="message.a">
+        <div>112121</div>
+        <ul>
+            <li>{{message.a}}</li>
+        </ul>
+        <div>{{message.a}}</div>
+    </div>
+    <!--<script src="./node_modules/vue/dist/vue.js"></script>-->
+    <script src="watcher.js"></script>
+    <script src="observer.js"></script>
+    <script src="compile.js"></script>
+    <script src="MVVM.js"></script>
+    <script>
+        // 我们的数据都挂载在vm上
+        // vue实现双向绑定    get set
+        // 1.模板的编译
+        // 2.数据的劫持 观察数据变化
+        // 3.Watcher
+
+        let vm = new MVVM({
+            el: '#app',
+            data: {
+                message: {
+                    a: 'hello vue'
+                },
+                a: 1
+            }
+        });
+    </script>
+</body>
+
+</html>

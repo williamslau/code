@@ -1,0 +1,25 @@
+create-react-app blog_react
+cd blog_react
+npm start
+
+
+
+安装antd UI库
+
+cnpm i antd -S
+
+// 这样写非常其实是吧这个库引入，项目非常大
+// import { Button } from 'antd';
+
+安装react-app-rewired 插件
+在package.json中修改配置项
+修改命令
+将react-scripts修改为react-app-rewired
+"scripts": {
+  "start": "react-app-rewired start",
+  "build": "react-app-rewired build",
+  "test": " react-app-rewired test --env=jsdom",
+  "eject": " react-app-rewired eject"
+}
+这样相当于给react打补丁，启动前先读补丁在打入react中
+

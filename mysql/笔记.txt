@@ -1,0 +1,354 @@
+安装好mysql数据库后，在环境变量添加bin文件夹的地址
+以管理员身份运行cmd否则回报错
+
+开启
+    net start MySQL
+关闭
+    net stop MySQL
+链接数据库
+    mysql -h127.0.0.1 -P3306 -uroot -p123456
+显示所有数据库
+    show databases;
+切换数据库
+    use school(数据库名);
+显示有那些表
+    show tables;
+    show tables from mysql;
+看数据库中的某个表
+    desc user_table;
+查看返回当前数据库
+    select database();
+表中的数据格式
+    int 整形 整数
+    varchar 可变字符集（varlable char）看字符长度来计算内存
+    char 不可变字符集                  不管存的多长，都会存入固定的大小
+    float 浮点型 小数
+
+    主键ID自增
+    主键可以是单个键，也可以是联合键
+
+    列类型
+        字符串型
+            char        不可变字符集 
+            varchar     可变字符集
+            text        文本
+            blob        二进制
+            enum        枚举
+            set         不重复字符串
+        日期类型
+            year        年
+            timestamp   时间戳
+            time        时间
+            date        日期
+            datetime    日期+时间
+        数值型
+            整数型
+                tinyint     微整形
+                smallint    短整形
+                mediumint   中整形
+                int         整形
+                blgint      长整形
+                从上往下越来越长，越来越大
+            小数
+                浮点
+                    float   单精度
+                    Double  双精度
+                定点
+                    decimal 精确计算    用来存放货币等
+
+sql 解构查询语言
+    DDL（data definition language）是数据定义语言
+    主要有 CREATE TABLE,ALTER TABLE,DROP TABLE  表（TABLE）的结构
+    DML（data manipulation language）是数据操纵语言
+    增删改查   SELECT、UPDATE、INSERT、DELETE
+    DCL（DataControlLanguage）是数据库控制语言
+    设置权限 包括（grant设置权限,revoke取消权限）语句
+--CONCAT() 字符串的链接
+SELECT CONCAT(firstname,lastname) FROM users;
+
+
+
+逻辑运算符
+查询
+--并且
+SELECT * FROM users
+WHERE age > 10 AND age < 80;
+--或者
+SELECT * FROM users
+WHERE age < 10 OR age > 50;
+--取反
+SELECT * FROM users
+WHERE NOT(age < 10 OR age > 50);
+--区间
+SELECT * FROM users
+WHERE age BETWEEN 10 AND 50;
+
+--取多个
+SELECT * FROM users
+WHERE age IN (10,79);
+
+--不包括某些值
+SELECT * FROM users
+WHERE age NOT IN (10,79);
+
+增加
+--插入
+INSERT INTO users(firstname,lastname,email,age,birthday)
+value('赵','六','4@qq.com',100,'1986-12-30');
+
+INSERT INTO users
+value(null,'赵','六','4@qq.com',100,'1986-12-30');
+
+INSERT INTO users
+value(null,'赵','六','4@qq.com',100,'1986-12-30');
+
+-- DEFAULT 默认值
+INSERT INTO users
+value(null,'陈','七','4@qq.com',DEFAULT,'1986-12-30');
+
+修改
+
+UPDATE users
+SET home = '南昌', birthday = '1993-06-24'
+WHERE ID = 20;
+
+UPDATE users
+SET email = '8@qq.com'
+WHERE email IS NULL;
+
+UPDATE users
+SET email = '8@qq.com'
+WHERE email IS NOT NULL;
+
+删除
+DELETE FROM users
+WHERE ID = 20;
+
+格式化表
+TRUNCATE TABLE user_table;
+
+
+
+排序
+ASC升序
+DESC降序
+
+书写顺序，列名，表明，过滤条件，排序
+
+SELECT *
+FROM users
+WHERE home = '北京'
+ORDER BY age DESC;
+
+函数
+字符函数
+字符串链接
+CONCAT() 字符串连接
+CONCAT_WS() 使用指定分隔符链接
+FORMAT(10000.170,2) 数字格式化，保留两位小数
+LOWER() 转小写
+UPPER() 转大写
+SELECT LEFT('sadada',3); 返回字符串左边s开始的n个字符
+SELECT RIGHT('sadada',3) 返回字符串右边s开始的n个字符
+
+数字函数
+CEIL	向上取整
+FLOOR	向下取整数
+DIV	整数取
+MOD	取余(取模)
+POWER	幂运算
+ROUND	四舍五入
+TRUNCATE	数字截取
+SELECT TRUNCATE(1.66,1); 字符截断保留几位小数
+
+日期函数
+函数名称
+NOW	当前日期和时间
+CURDATE	当前日期
+CURTIME	当前时间
+DATE_ADD	日期变化
+DATEDIFF	计算日期差
+DATE_FORMAT	日期格式化
+SELECT DATE_FORMAT(NOW(),'%Y年%m月%d日 %H时%i分%s秒');  日期格式化
+
+SELECT YEAR(NOW());
+SELECT MONTH(NOW());
+SELECT MONTHNAME(NOW());
+SELECT DAY(NOW());
+SELECT HOUR(NOW());
+SELECT MINUTE(NOW());
+SELECT SECOND(NOW());
+
+序号	格式符	功能
+1	%Y	4位的年份
+2	%y	2位的年份
+3	%m	月份(01,02)
+4	%c	月份(1,2)
+5	%d	日(01,02)
+6	%H	小时(24小时制)
+7	%h	小时(12小时制)
+8	%i	分钟(00,01)
+9	%s	秒(00,01)
+其他函数
+数据库版本
+SELECT VERSION();
+
+流程控制函数
+
+类似三元运算符
+SELECT IF(1>0,'A','B');
+
+类似switch case
+SELECT 
+student_id,
+course_id,
+CASE 
+WHEN grade>90 THEN '优秀'
+WHEN grade>70 THEN '良好'
+WHEN grade>60 THEN '及格'
+ELSE '不及格'
+END
+FROM score;
+
+in
+SELECT * FROM student
+WHERE city IN ('济南','终南山')
+
+模糊查询 配合通配符
+代替一个或多个真正的字符，与LIKE 关键字一起使用
+_   一个字符  LINK'a_'      as,ad等
+%   任意长度  LINK'c%'      code,cat等
+[]  一定范围  LINK'1[35]5'  135或185
+[^] 不包括的  LINK'1^1-2'5  135或185等
+
+SELECT * FROM student
+WHERE email LIKE '_@%';
+
+SELECT * FROM student
+WHERE email LIKE '%关键字%';
+
+
+创建表
+CREATE TABLE aaaa(
+	id int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	name VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE `score` (
+  `student_id` int(11) NOT NULL DEFAULT '0',
+  `course_id` int(11) NOT NULL DEFAULT '0',
+  `grade` float DEFAULT NULL,
+  PRIMARY KEY (`student_id`,`course_id`),
+  KEY `fk_courseid` (`course_id`),
+  CONSTRAINT `fk_courseid` FOREIGN KEY (`course_id`) REFERENCES `course` (`id`),
+  CONSTRAINT `fk_stuid` FOREIGN KEY (`student_id`) REFERENCES `student` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+插入数据
+ALTER TABLE `student`
+ADD COLUMN `province`  varchar(50) NULL AFTER `city`,
+ADD COLUMN `birthday`  date NULL AFTER `province`,
+ADD COLUMN `gender`   int(11) NULL AFTER `birthday`,
+ADD COLUMN `email`  varchar(50) NULL AFTER `gender`;
+
+上一个插入的字段的主键
+SELECT LAST_INSERT_ID()
+INSERT INTO user(name) VALUES('williamlau');
+INSERT INTO user_score(SELECT LAST_INSERT_ID(),0)
+
+
+
+聚合函数
+SUM 求和
+SELECT SUM(grade) FROM score;
+MAX最大值
+SELECT MAX(grade) FROM score;
+MIN最小值
+SELECT MIN(grade) FROM score;
+AVG平均数
+SELECT AVG(grade) FROM score;
+COUNT总数
+select COUNT(*) from student;
+
+分组
+
+SELECT 列名,查询表达式
+FROM  <表名>  
+WHERE  <条件>
+GROUP BY <分组字段> 分组整合
+HAVING 分组后的过滤条件 过滤只能是整合后的数据，不能以表数据为依据
+ORDER BY 列名 [ASC,DESC]
+LIMIT 偏移量,条数
+
+SELECT student_id,AVG(grade)
+FROM score
+WHERE grade>80
+GROUP BY student_id
+HAVING AVG(grade) >= 90;
+
+子查询
+写在括号里
+SELECT * 
+FROM student
+WHERE age > (SELECT ROUND(AVG(age)) 
+FROM student);
+
+
+ANY 任何一个
+SOME 某些
+ALL 全部
+
+SELECT *
+FROM student
+WHERE age > ALL (SELECT age FROM student WHERE province ='山东省');
+
+SELECT *
+FROM student
+WHERE age > (SELECT MAX(age) FROM student WHERE province ='山东省');
+
+
+是否存在
+EXISTS
+NOTEXISTS
+
+表连接
+内连接
+SELECT student.name,course.name,score.grade FROM score,student,course
+WHERE score.student_id = student.ID = course.ID;
+
+SELECT student.name,course.name,score.grade FROM score
+INNER JOIN student on score.student_id = student_id
+INNER JOIN course on score.course_id = course_id
+
+SELECT a.*, GROUP_CONCAT(l.label)
+AS label FROM article_table a
+INNER JOIN article_label_table al
+ON al.articleid=a.ID
+INNER JOIN label_table l
+ON al.labelid=l.ID
+GROUP BY a.ID;
+
+左链接
+SELECT persons.lastname,persons.firstname,orders.orderno
+FROM persons
+LEFT JOIN orders
+ON persons.pid=orders.pid
+ORDER BY Persons.LastName;
+
+
+右链接
+SELECT persons.lastname,persons.firstname,orders.orderno
+FROM persons
+RIGHT JOIN orders
+ON persons.pid=orders.pid
+ORDER BY Persons.LastName;
+
+
+
+
+
+
+
+
+
+
